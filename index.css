@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Numans&display=swap');
+
+body {
+    background-color: #FFFFFC;
+    font-family: 'Numans', sans-serif;
+    color: #2F4858;
+}
+
+h2 {
+    font-size: 1.3em;
+    padding: 0.5em 0;
+}
+
+h3 {
+    font-size: 1.2em;
+}
+
+h4 {
+    font-size: 1em;
+}
+
+p {
+    font-size: 1.1em;
+}
+
+.museek-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.museek-header {
+    display: flex;
+    justify-content: center;
+}
+
+.museek-logo {
+    width: 15em;
+}
+
+.museek-search {
+    margin: 1em 0;
+    display: flex;
+    justify-content: center;
+}
+
+.museek-search-bar {
+    background-image: url('./assets/search-icon.svg');
+    background-repeat: no-repeat;
+    background-position: 99%;
+    position: relative;
+    font-family: 'Numans', sans-serif;
+    height: 44px;
+    width: 80%;
+    border: 2px solid #2F4858;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.3em;
+    line-height: 1em;
+    padding-left: 16px;
+}
+
+.museek-lyrics-info-container {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+.museek-lyrics, .museek-info {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    background: rgba(47, 72, 88, 0.05);
+    margin-top: 1em;
+    padding: 1em;
+    border-radius: 10px;
+    border: 2px solid #2F4858;
+    box-sizing: border-box;
+}
+
+.museek-lyrics {
+    order: 2;
+}
+
+.museek-lyrics > h2 {
+    padding-top: 0;
+}
+
+.museek-info {
+    order: 1;
+}
+
+.museek-info-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.museek-info-header > h2 {
+    padding-top: 0;
+}
+
+.dropdown {
+    transition: 0.3s;
+}
+
+.dropdown-rotate {
+    transform: rotate(180deg);
+}
+
+.museek-info-song {
+    display: flex;
+    flex-direction: row;
+}
+
+.museek-placeholder {
+    width: 66px;
+    height: 66px;
+    border-radius: 3px;
+    margin-right: 1em;
+}
+
+.museek-info-dropdown-content {
+    display: none;
+}
+
+.museek-info-dropdown-content-open {
+    display: block;
+}
+
+@media (min-width: 1200px) {
+
+    .museek-lyrics-info-container {
+        height: 100%;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .museek-lyrics {
+        height: 100%;
+        width: 65%;
+        margin-right: 3%;
+        order: 1;
+    }
+    
+    .museek-info {
+        width: 25%;
+        order: 2;
+    }
+
+    .museek-info-header {
+        cursor: default;
+    }
+    
+    .dropdown {
+        display: none;
+    }
+
+    .museek-info-dropdown-content {
+        display: block;
+    }
+}
