@@ -45,10 +45,10 @@ p {
 }
 
 .museek-search-bar {
+    position: relative;
     background-image: url('./assets/search-icon.svg');
     background-repeat: no-repeat;
     background-position: 99%;
-    position: relative;
     font-family: 'Numans', sans-serif;
     height: 44px;
     width: 80%;
@@ -60,6 +60,34 @@ p {
     font-size: 1.3em;
     line-height: 1em;
     padding-left: 16px;
+}
+
+.museek-search-results {
+    display: none;
+    position: absolute;
+    top: 9.5em;
+    width: 80%;
+    max-height: 27em;
+    overflow-x: scroll;
+    border: 2px solid #2F4858;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.museek-search-results-song {
+    display: flex;
+    padding: 1em;
+    border-bottom: 2px solid #2F4858;
+}
+
+.museek-search-results-song:last-child {
+    border-bottom: none;
+}
+
+.museek-results-artwork {
+    width: 72px;
+    height: 72px;
+    margin-right: 1em;
 }
 
 .museek-lyrics-info-container {
@@ -116,7 +144,7 @@ p {
     flex-direction: row;
 }
 
-.museek-placeholder {
+.museek-artwork {
     width: 66px;
     height: 66px;
     border-radius: 3px;

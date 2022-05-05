@@ -10,12 +10,15 @@
 </head>
 <body>
     <div class="museek-container">
-        <div class="museek-header">
+        <header class="museek-header">
             <img class="museek-logo" src="./assets/museek-logo.png" alt="Museek logo">
-        </div>
+        </header>
         <div class="museek-search-group">
             <div class="museek-search">
                 <input class="museek-search-bar" type="text" placeholder="Search for a song...">
+                <div class="museek-search-results">
+                    <!-- <div id="0" class="museek-search-results-song"></div> -->
+                </div>
             </div>
         </div>
         <div class="museek-lyrics-info-container">
@@ -31,18 +34,18 @@
                         <img class="dropdown" src="./assets/dropdown.svg" alt="Expand song info">
                     </div>
                     <div class="museek-info-song">
-                        <img class="museek-placeholder"" src="./assets/placeholder.jpg" alt="">
+                        <img class="museek-artwork" src="./assets/placeholder.jpg" alt="">
                         <div>
-                            <h3>Song title</h3>
-                            <h4>by Artist</h4>
-                            <h4>from Album</h4>
+                            <h3 class="song-title">Song title</h3>
+                            <h4 class="song-artist">by Artist</h4>
+                            <h4 class="song-album">from Album</h4>
                         </div>
                     </div>
                     <div class="museek-info-dropdown-content">
                         <h2>Song summary</h2>
                         <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veniam unde eos magni eaque pariatur natus id itaque maiores quisquam iusto fuga quae debitis facilis quidem, temporibus, placeat porro! Sunt, error!</p>
                         <h2>Steam the song</h2>
-                        <iframe width="100%" height="70%" src="https://www.youtube.com/embed/qrO4YZeyl0I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <!-- <iframe width="100%" height="70%" src="https://www.youtube.com/embed/qrO4YZeyl0I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
                     </div>
                 </div>
             </aside>
