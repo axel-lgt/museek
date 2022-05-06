@@ -8,6 +8,7 @@ const loader = document.querySelector('.loader')
 const dropdown = document.querySelector('.dropdown');
 const dropdownHeader = document.querySelector('.museek-info-header');
 const dropdownContent = document.querySelector('.museek-info-dropdown-content');
+const ytPlayer = document.querySelector('iframe')
 
 console.log('In index.js');
 
@@ -93,6 +94,13 @@ const showSelectSongInfo = async song => {
     // console.log(secondDescArray);
 
     dropdownContent.querySelector('p').innerHTML = finalArray.join(' ')
+
+    // Getting the YouTube URL
+    const youtubeURL = song[0].youtube
+
+    // Slicing the URL just to get the video ID for the embedded video
+    const youtubeID = youtubeURL.slice(31);
+    ytPlayer.src = `https://www.youtube.com/embed/${youtubeID}`
 }
 
 const mapDataFromId = song => {
