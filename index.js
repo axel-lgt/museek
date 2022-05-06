@@ -1,6 +1,7 @@
 const search = document.querySelector('.museek-search-bar');
 const songInfo = document.querySelector('.museek-lyrics-info-container');
 const songResults = document.querySelector('.museek-search-results');
+const loader = document.querySelector('.loader')
 
 
 
@@ -20,6 +21,7 @@ const showSelectSongInfo = async song => {
 
     const getLyrics = await axios.get(`http://localhost:3333/lyrics/`, { params: { geniusURL, songPath }} )
     const lyricsArray = getLyrics.data
+    loader.style.display = 'none'
 
     // console.log(song);
     songInfo.style.display = 'flex';
@@ -36,19 +38,61 @@ const showSelectSongInfo = async song => {
     // dropdownContent.querySelector('p').innerHTML = song[0].description?.children
     // console.log(song[0].description);
 
+    // console.log(song[0].description);
+
     let descriptionArray = [];
     
     song[0].description.forEach(desc => {
-        console.log(desc.children);
+        // console.log(desc.children);
         // console.log(desc.children?.children);
         // console.log(desc);
         // console.log(desc.children.textContent);
+        console.log(desc.children?.tag);
         descriptionArray.push(desc.children)
     })
 
-    console.log(descriptionArray);
+    // Flattening the array so that it's on the same level
+    const flatDescriptionArray = descriptionArray.flat(3)
+    console.log(flatDescriptionArray);
 
-    dropdownContent.querySelector('p').innerHTML = descriptionArray
+    // Filtering from the array each element with a tag
+    const filteredTags = flatDescriptionArray.filter(item => item?.tag)
+    console.log(filteredTags);
+    console.log(filteredTags.flat(3));
+    console.log(filteredTags.filter(item => item?.tag));
+
+    // Filtering from the array each element without a tag
+    const filteredNoTags = flatDescriptionArray.filter(item => !item?.tag);
+    console.log(filteredNoTags);
+
+    let descTagsArray = [];
+
+    filteredTags.forEach((desc) => {
+        descTagsArray.push(desc.children)
+    })
+
+    console.log(descTagsArray.flat());
+
+    const flatTagsArray = descTagsArray.flat()
+
+    let finalArray = [];
+
+    for (let i = 0; i < filteredNoTags.length; i++) {
+        finalArray.push(filteredNoTags[i], flatTagsArray[i])
+    }
+
+    console.log(finalArray.join(' '));
+
+    // let arrNum = 2
+    // console.log(flatDescriptionArray.slice(0, arrNum));
+    // let secondDescArray = []
+
+    // for(let i = 0; i < flatDescriptionArray.length; i+= 2) {
+    //     secondDescArray.push(flatDescriptionArray[i])
+    // }
+    // console.log(secondDescArray);
+
+    dropdownContent.querySelector('p').innerHTML = finalArray.join(' ')
 }
 
 const mapDataFromId = song => {
@@ -74,6 +118,7 @@ const getSongInfo = async songId => {
     const path = songId
 
     try {
+        loader.style.display = 'flex'
         const response = await axios.request(`http://localhost:3333/searchById`, { params : { geniusURL, path } });
         const songFromId = response.data
         mapDataFromId(songFromId)
@@ -84,34 +129,43 @@ const getSongInfo = async songId => {
 }
  
 const showResults = async (results) => {
-    await results.forEach(result => {
-        songResults.innerHTML += 
-        `
-            <div id=${result.id} class="museek-search-results-song">
-                <div class="museek-search-results-song-left">
-                    <img class="museek-results-artwork" src=${result.artwork} alt="Song artwork">
-                </div>
-                <div class="museek-search-results-song-right">
-                    <h3>${result.title}</h3>
-                    <h4>by ${result.artist}</h4>
-                </div>
-            </div>
-        `
-    })
-    // I declare songItems here because it will return undefined or 0 if I declare it on top, before this variable
-    const songItems = document.querySelectorAll('.museek-search-results-song');
+        console.log(results);
+        songResults.innerHTML = ''
 
-    songItems.forEach(item => {
-        item.addEventListener("click", () => {
-            // After getting the id by clicking on the item I have to clear the search bar and the results
-            getSongInfo(item.id);
-            search.value = '';
-            songResults.innerText = '';
-            songResults.style.display = 'none';
+        await results.forEach(result => {
+            songResults.innerHTML += 
+            `
+                <div id=${result.id} class="museek-search-results-song">
+                    <div class="museek-search-results-song-left">
+                        <img class="museek-results-artwork" src=${result.artwork} alt="Song artwork">
+                    </div>
+                    <div class="museek-search-results-song-right">
+                        <h3>${result.title}</h3>
+                        <h4>by ${result.artist}</h4>
+                    </div>
+                </div>
+            `
         })
-    })
-
-    songResults.style.display = 'block';
+        // I declare songItems here because it will return undefined or 0 if I declare it on top, before this variable
+        const songItems = document.querySelectorAll('.museek-search-results-song');
+    
+        songItems.forEach(item => {
+            item.addEventListener("click", () => {
+                // After getting the id by clicking on the item I have to clear the search bar and the results
+                getSongInfo(item.id);
+                search.value = '';
+                songResults.innerText = '';
+                songResults.style.display = 'none';
+                songInfo.style.display = 'none';
+            })
+        })
+        
+        // IF the query is NOT empty, then display the results container
+        if(results.length !== 0) {
+            songResults.style.display = 'block';
+        } else {
+            return
+        }
 }
 
 
@@ -130,6 +184,12 @@ const mapData = hits => {
 const getQuery = async () => {
     const searchQuery = search.value;
     console.log('This is the query: ' + searchQuery);
+
+    // If the query value is empty
+    if(searchQuery == '') {
+        songResults.innerHTML = '';
+        songResults.style.display = 'none'
+    }
 
     const geniusURL = `https://genius.p.rapidapi.com/search?q=`
     const path = searchQuery
