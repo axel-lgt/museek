@@ -10,17 +10,9 @@ const dropdownContent = document.querySelector('.museek-info-dropdown-content');
 
 console.log('In index.js');
 
-// const api = axios.create({
-//     baseURL: 'http://localhost:3333/'
-// })
-
-const options = {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Host': 'genius.p.rapidapi.com',
-      'X-RapidAPI-Key': '90a91bb2b4msh003d7f6435073afp103dddjsnfed05f6e76fd'
-    }
-};
+const api = axios.create({
+    baseURL: 'http://localhost:3333/'
+})
 
 const showSelectSongInfo = async song => {
     const geniusURL = `https://genius.com`
@@ -77,11 +69,14 @@ const mapDataFromId = song => {
 
 const getSongInfo = async songId => {
     console.log('This is the song id ' + songId);
-    console.log('hskjhd');
+
+    const geniusURL = `https://genius.p.rapidapi.com/songs/`
+    const path = songId
 
     try {
-        const res = await axios.request(`https://genius.p.rapidapi.com/songs/${songId}`, options);
-        mapDataFromId(res.data.response.song)
+        const response = await axios.request(`http://localhost:3333/searchById`, { params : { geniusURL, path } });
+        const songFromId = response.data
+        mapDataFromId(songFromId)
     } catch (err) {
         console.log(err);
     }
@@ -136,9 +131,13 @@ const getQuery = async () => {
     const searchQuery = search.value;
     console.log('This is the query: ' + searchQuery);
 
+    const geniusURL = `https://genius.p.rapidapi.com/search?q=`
+    const path = searchQuery
+
     try {
-        const response = await axios.request(`https://genius.p.rapidapi.com/search?q=${searchQuery}`, options);
-        mapData(response.data.response.hits);
+        const response = await axios.request(`http://localhost:3333/search/`, { params: { geniusURL, path } });
+        const hitsData = response.data
+        mapData(hitsData);
     } catch (err) {
         console.log(err);
     }

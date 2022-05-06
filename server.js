@@ -5,16 +5,49 @@ const cors = require('cors')
 const jsdom = require('jsdom')
 const { JSDOM } = jsdom
 
-// const dotenv = require('dotenv')
-// dotenv.config()
+const dotenv = require('dotenv')
+dotenv.config()
+
+const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Host': process.env.GENIUS_API_HOST,
+      'X-RapidAPI-Key': process.env.GENIUS_API_KEY
+    }
+};
 
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true}))
 
+app.get('/search', async (req, res) => {
+    console.log(req.query);
+    const geniusURL = req.query.geniusURL
+    const path = req.query.path
+
+    try {
+        const response = await axios.request(geniusURL + path, options)
+        res.send(response.data.response.hits)
+    } catch(err) {
+        console.log(err);
+    }
+})
+
+app.get('/searchById', async (req, res) => {
+    console.log(req.query);
+    const geniusURL = req.query.geniusURL
+    const path = req.query.path
+
+    try {
+        const response = await axios.request(geniusURL + path, options)
+        res.send(response.data.response.song)
+    } catch(err) {
+        console.log(err);
+    }
+})
+
 app.get('/lyrics', async (req, res) => {
-    // console.log(req.query);
-    console.log('Here');
+    console.log(req.query);
 
     const geniusURL = req.query.geniusURL
     const songPath = req.query.songPath
