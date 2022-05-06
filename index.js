@@ -36,18 +36,9 @@ const showSelectSongInfo = async song => {
     document.querySelector('.song-artist').innerHTML = `by ${song[0].artist}`
     document.querySelector('.song-album').innerHTML = `from ${song[0].album}`
 
-    // dropdownContent.querySelector('p').innerHTML = song[0].description?.children
-    // console.log(song[0].description);
-
-    // console.log(song[0].description);
-
     let descriptionArray = [];
     
     song[0].description.forEach(desc => {
-        // console.log(desc.children);
-        // console.log(desc.children?.children);
-        // console.log(desc);
-        // console.log(desc.children.textContent);
         console.log(desc.children?.tag);
         descriptionArray.push(desc.children)
     })
@@ -78,20 +69,12 @@ const showSelectSongInfo = async song => {
 
     let finalArray = [];
 
+    // Pushing into the new array both array sequentially (ex: [arr1, arr2, arr1, arr2...])
     for (let i = 0; i < filteredNoTags.length; i++) {
         finalArray.push(filteredNoTags[i], flatTagsArray[i])
     }
 
     console.log(finalArray.join(' '));
-
-    // let arrNum = 2
-    // console.log(flatDescriptionArray.slice(0, arrNum));
-    // let secondDescArray = []
-
-    // for(let i = 0; i < flatDescriptionArray.length; i+= 2) {
-    //     secondDescArray.push(flatDescriptionArray[i])
-    // }
-    // console.log(secondDescArray);
 
     dropdownContent.querySelector('p').innerHTML = finalArray.join(' ')
 
