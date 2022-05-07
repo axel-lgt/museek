@@ -68,19 +68,6 @@ app.get('/lyrics', async (req, res) => {
     }
 })
 
-app.get('/test', async (req, res) => {
-    
-    try {
-        const response = await axios.request(`https://genius.p.rapidapi.com/songs/2563`, options)
-        // console.log(response.data.response.song.description)
-        // const dom = new JSDOM(response.data.response.song.description)
-        const parsedRes = JSON.parse(response.data.response.song.description)
-        console.log(parsedRes);
-    } catch(err) {
-        console.log(err);
-    }
-})
-
 app.listen(3333, () => {
     console.log('Server running');
 })
