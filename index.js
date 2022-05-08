@@ -2,9 +2,6 @@ const search = document.querySelector('.museek-search-bar');
 const songInfo = document.querySelector('.museek-lyrics-info-container');
 const songResults = document.querySelector('.museek-search-results');
 const loader = document.querySelector('.loader')
-
-
-
 const dropdown = document.querySelector('.dropdown');
 const dropdownHeader = document.querySelector('.museek-info-header');
 const dropdownContent = document.querySelector('.museek-info-dropdown-content');
@@ -20,15 +17,24 @@ const showSelectSongInfo = async song => {
     const geniusURL = `https://genius.com`
     const songPath = `${song[0].path}`
 
-    const getLyrics = await axios.get(`http://localhost:3333/lyrics/`, { params: { geniusURL, songPath }} )
-    const lyricsArray = getLyrics.data
+    const getLyricsAndDesc = await axios.get(`http://localhost:3333/lyrics/`, { params: { geniusURL, songPath }} )
+    const lyricsArray = getLyricsAndDesc.data[0]
+    const descriptionArray = getLyricsAndDesc.data[1]
     loader.style.display = 'none'
 
     // console.log(song);
     songInfo.style.display = 'flex';
 
     // Displaying lyrics
-    document.querySelector('.museek-lyrics p').innerHTML = lyricsArray;
+    const lyricsContainer = document.querySelector('.museek-lyrics-content')
+    lyricsContainer.innerHTML = lyricsArray;
+
+    document.querySelectorAll('a').forEach(tag => {
+        // Taking the a tag link and slicing the museek's baseURL
+        const tagHref = tag.href.slice(22)
+        tag.href = `https://www.genius.com/${tagHref}`
+        tag.setAttribute('target', '_blank')
+    })
 
     // Displaying "About this song"
     document.querySelector('.museek-artwork').src=`${song[0].artwork}`
@@ -36,53 +42,27 @@ const showSelectSongInfo = async song => {
     document.querySelector('.song-artist').innerHTML = `by ${song[0].artist}`
     document.querySelector('.song-album').innerHTML = `from ${song[0].album}`
 
-    let descriptionArray = [];
-    
-    song[0].description.forEach(desc => {
-        console.log(desc.children?.tag);
-        descriptionArray.push(desc.children)
+    dropdownContent.querySelector('.song-description').innerHTML = descriptionArray
+    // If description has images, set their sizes
+    dropdownContent.querySelectorAll('* > img').forEach(img => {
+        img.style.width = '100%'
+        img.style.height = '100%'
     })
-
-    // Flattening the array so that it's on the same level
-    const flatDescriptionArray = descriptionArray.flat(3)
-    console.log(flatDescriptionArray);
-
-    // Filtering from the array each element with a tag
-    const filteredTags = flatDescriptionArray.filter(item => item?.tag)
-    console.log(filteredTags);
-    console.log(filteredTags.flat(3));
-    console.log(filteredTags.filter(item => item?.tag));
-
-    // Filtering from the array each element without a tag
-    const filteredNoTags = flatDescriptionArray.filter(item => !item?.tag);
-    console.log(filteredNoTags);
-
-    let descTagsArray = [];
-
-    filteredTags.forEach((desc) => {
-        descTagsArray.push(desc.children)
-    })
-
-    console.log(descTagsArray.flat());
-
-    const flatTagsArray = descTagsArray.flat()
-
-    let finalArray = [];
-
-    // Pushing into the new array both array sequentially (ex: [arr1, arr2, arr1, arr2...])
-    for (let i = 0; i < filteredNoTags.length; i++) {
-        finalArray.push(filteredNoTags[i], flatTagsArray[i])
-    }
-
-    console.log(finalArray.join(' '));
-
-    dropdownContent.querySelector('p').innerHTML = finalArray.join(' ')
 
     // Getting the YouTube URL
-    const youtubeURL = song[0].youtube
+    const media = song[0].media
+    
+    const filteredMedia = media.filter(item => {
+        return item.provider === 'youtube'
+    })
+    
+    let youtubeURL = []
 
-    // Slicing the URL just to get the video ID for the embedded video
-    const youtubeID = youtubeURL.slice(31);
+    filteredMedia.forEach(media => {
+        youtubeURL.push(media.url)
+    })
+
+    const youtubeID =  youtubeURL.toString().slice(31)
     ytPlayer.src = `https://www.youtube.com/embed/${youtubeID}`
 }
 
@@ -94,7 +74,7 @@ const mapDataFromId = song => {
             title: item.title,
             album: item.album.name,
             artwork: item.song_art_image_url,
-            youtube: item.media[0].url,
+            media: item.media,
             description: item.description.dom.children,
             path: item.path
         }

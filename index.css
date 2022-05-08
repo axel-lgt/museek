@@ -4,23 +4,36 @@ body {
     background-color: #FFFFFC;
     font-family: 'Numans', sans-serif;
     color: #2F4858;
+    line-height: 1.5rem;
+    padding-bottom: 2rem;
 }
 
 h2 {
-    font-size: 1.3em;
-    padding: 0.5em 0;
+    font-size: 1.3rem;
+    padding: 1rem 0;
 }
 
 h3 {
-    font-size: 1.2em;
+    font-size: 1.2rem;
 }
 
 h4 {
-    font-size: 1em;
+    font-size: 1rem;
 }
 
 p {
-    font-size: 1.1em;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+}
+
+a {
+    background: rgba(47, 72, 88, 0.09);
+}
+
+blockquote {
+    quotes: "«" "»";
+    font-style: italic;
+    margin: 1em 0 1em 1em;
 }
 
 .museek-container {
@@ -180,6 +193,10 @@ p {
 
 .museek-info-dropdown-content-open {
     display: block;
+}
+
+.song-description > p:first-child {
+    padding-top: 0;
 }
 
 @media (min-width: 1200px) {

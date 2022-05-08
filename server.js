@@ -55,14 +55,23 @@ app.get('/lyrics', async (req, res) => {
         const response = await axios.get(geniusURL + songPath)
         const dom = new JSDOM(response.data)
         const fetchedLyrics = dom.window.document.querySelectorAll('div[data-lyrics-container="true"]')
+        const fetchedDescription = dom.window.document.querySelector("[class^=\"RichText__Container\"]")
+
         let lyricsArray = []
+        let descriptionArray = []
+
+        descriptionArray.push(fetchedDescription.innerHTML)
 
         fetchedLyrics.forEach(lyrics => {
             const lyricsContent = lyrics.innerHTML
             lyricsArray.push(lyricsContent)
         })
 
-        res.send(lyricsArray)
+        let lyricsAndDescriptionArray = []
+
+        lyricsAndDescriptionArray.push(lyricsArray, descriptionArray)
+
+        res.send(lyricsAndDescriptionArray)
     } catch (err) {
         console.log(err);
     }
