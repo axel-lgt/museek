@@ -7,22 +7,15 @@ const dropdownHeader = document.querySelector('.museek-info-header');
 const dropdownContent = document.querySelector('.museek-info-dropdown-content');
 const ytPlayer = document.querySelector('iframe')
 
-console.log('In index.js');
-
-const api = axios.create({
-    baseURL: 'http://localhost:3333/'
-})
-
 const showSelectSongInfo = async song => {
     const geniusURL = `https://genius.com`
     const songPath = `${song[0].path}`
 
-    const getLyricsAndDesc = await axios.get(`http://localhost:3333/lyrics/`, { params: { geniusURL, songPath }} )
+    const getLyricsAndDesc = await axios.get(`https://museek-lyrics-api.herokuapp.com/lyrics/`, { params: { geniusURL, songPath }} )
     const lyricsArray = getLyricsAndDesc.data[0]
     const descriptionArray = getLyricsAndDesc.data[1]
     loader.style.display = 'none'
 
-    // console.log(song);
     songInfo.style.display = 'flex';
 
     // Displaying lyrics
@@ -31,6 +24,7 @@ const showSelectSongInfo = async song => {
 
     document.querySelectorAll('a').forEach(tag => {
         // Taking the a tag link and slicing the museek's baseURL
+        console.log(tag.href);
         const tagHref = tag.href.slice(22)
         tag.href = `https://www.genius.com/${tagHref}`
         tag.setAttribute('target', '_blank')
@@ -83,14 +77,13 @@ const mapDataFromId = song => {
 }
 
 const getSongInfo = async songId => {
-    console.log('This is the song id ' + songId);
 
     const geniusURL = `https://genius.p.rapidapi.com/songs/`
     const path = songId
 
     try {
         loader.style.display = 'flex'
-        const response = await axios.request(`http://localhost:3333/searchById`, { params : { geniusURL, path } });
+        const response = await axios.request(`https://museek-lyrics-api.herokuapp.com/searchById`, { params : { geniusURL, path } });
         const songFromId = response.data
         mapDataFromId(songFromId)
     } catch (err) {
@@ -100,7 +93,6 @@ const getSongInfo = async songId => {
 }
  
 const showResults = async (results) => {
-        console.log(results);
         songResults.innerHTML = ''
 
         await results.forEach(result => {
@@ -154,7 +146,6 @@ const mapData = hits => {
 
 const getQuery = async () => {
     const searchQuery = search.value;
-    console.log('This is the query: ' + searchQuery);
 
     // If the query value is empty
     if(searchQuery == '') {
@@ -166,7 +157,7 @@ const getQuery = async () => {
     const path = searchQuery
 
     try {
-        const response = await axios.request(`http://localhost:3333/search/`, { params: { geniusURL, path } });
+        const response = await axios.request(`https://museek-lyrics-api.herokuapp.com/search/`, { params: { geniusURL, path } });
         const hitsData = response.data
         mapData(hitsData);
     } catch (err) {
