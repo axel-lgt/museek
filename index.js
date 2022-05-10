@@ -24,7 +24,6 @@ const showSelectSongInfo = async song => {
 
     document.querySelectorAll('a').forEach(tag => {
         // Taking the a tag link and slicing the museek's baseURL
-        console.log(tag.href);
         const tagHref = tag.href.slice(22)
         tag.href = `https://www.genius.com/${tagHref}`
         tag.setAttribute('target', '_blank')

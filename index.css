@@ -199,6 +199,24 @@ blockquote {
     padding-top: 0;
 }
 
+.iframe-container {
+    position: relative;
+	padding-bottom: 56.25%;
+	padding-top: 30px;
+	height: 0;
+	overflow: hidden;
+}
+
+.iframe-container iframe,  
+.iframe-container object,  
+.iframe-container embed {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
 @media (min-width: 1200px) {
 
     .museek-lyrics-info-container {
