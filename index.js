@@ -38,9 +38,14 @@ const showSelectSongInfo = async song => {
     if(descriptionArray.length > 0) {
         dropdownContent.querySelector('.song-description').innerHTML = descriptionArray
         // If description has images, set their sizes
-        dropdownContent.querySelectorAll('* > img').forEach(img => {
-            img.style.width = '100%'
-            img.style.height = '100%'
+        dropdownContent.querySelectorAll('*').forEach(itm => {
+            itm.style.width = '100%'
+            itm.style.height = '100%'
+        })
+        dropdownContent.querySelectorAll('iframe').forEach(vid => {
+            vid.style.width = '100%'
+            vid.style.height = '100%'
+            vid.style.aspectRatio = '16/9'
         })
     } else {
         dropdownContent.style.display = 'none'
