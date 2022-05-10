@@ -43,7 +43,7 @@ const showSelectSongInfo = async song => {
             img.style.height = '100%'
         })
     } else {
-        return
+        dropdownContent.style.display = 'none'
     }
 
     // Getting the YouTube URL
