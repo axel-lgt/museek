@@ -1,4 +1,5 @@
 # :musical_note: Welcome to the Museek repository! :notes:
+🚀 Version 1.0 ([English](https://github.com/axel-lgt/museek/blob/master/README.md), [Français](https://github.com/axel-lgt/museek/blob/master/README.fr.md))
 
 Museek is a small project allowing you to search for your favorite music lyrics! Entirely made with **JavaScript**  and powered by the **Genius API** and **Node.js**, I made this small project in five days.
 
@@ -40,7 +41,7 @@ The root folder files are the front-end files. In **index.js**, you are able to 
 All the styling was done in pure CSS in the **index.css** file. I also made the design responsive with a media query. The styling was made in **mobile first** and the media query handled a desktop viewport.
 
 ### Back-end
-In the **server** folder, the **server.js** file is where all the data is handled. Using an Express server was very easy even though I was not used to it. The front-end sends a request to the server with two parameters (the API URL and the search results or the song ID). The server receives and handles the request before sending another request do the Genius API thanks to the parameters passed via the front-end request. Even though I could technically handle most requests in the front-end file, I had to create the server so as to bypass CORS rejections.
+In the **server** folder, the **server.js** file is where all the data is handled. Using an Express server was very easy even though I was not used to it. The front-end sends a request to the server with two parameters (the API URL and the user query or the song ID). The server receives and handles the request before sending another request do the Genius API thanks to the parameters passed via the front-end request. Even though I could technically handle most requests in the front-end file, I had to create the server so as to bypass CORS rejections.
 
 In order to fetch the lyrics and the descriptions from the Genius website, I used the JSDOM module which helped me parse the HTML elements in Node.js
 
