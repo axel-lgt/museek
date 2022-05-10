@@ -35,12 +35,16 @@ const showSelectSongInfo = async song => {
     document.querySelector('.song-artist').innerHTML = `by ${song[0].artist}`
     document.querySelector('.song-album').innerHTML = `from ${song[0].album}`
 
-    dropdownContent.querySelector('.song-description').innerHTML = descriptionArray
-    // If description has images, set their sizes
-    dropdownContent.querySelectorAll('* > img').forEach(img => {
-        img.style.width = '100%'
-        img.style.height = '100%'
-    })
+    if(descriptionArray.length > 0) {
+        dropdownContent.querySelector('.song-description').innerHTML = descriptionArray
+        // If description has images, set their sizes
+        dropdownContent.querySelectorAll('* > img').forEach(img => {
+            img.style.width = '100%'
+            img.style.height = '100%'
+        })
+    } else {
+        return
+    }
 
     // Getting the YouTube URL
     const media = song[0].media

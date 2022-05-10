@@ -60,7 +60,9 @@ app.get('/lyrics', async (req, res) => {
         let lyricsArray = []
         let descriptionArray = []
 
-        descriptionArray.push(fetchedDescription.innerHTML)
+        if(fetchedDescription !== null) {
+            descriptionArray.push(fetchedDescription.innerHTML)
+        }
 
         fetchedLyrics.forEach(lyrics => {
             const lyricsContent = lyrics.innerHTML
@@ -77,6 +79,6 @@ app.get('/lyrics', async (req, res) => {
     }
 })
 
-app.listen(3333, () => {
+app.listen(process.env.PORT || 3333, () => {
     console.log('Server running');
 })
