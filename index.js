@@ -162,7 +162,8 @@ const getQuery = async () => {
     }
 
     const geniusURL = `https://genius.p.rapidapi.com/search?q=`
-    const path = searchQuery
+    const path = encodeURIComponent(searchQuery)
+    console.log();
 
     try {
         const response = await axios.request(`https://museek-lyrics-api.herokuapp.com/search/`, { params: { geniusURL, path } });
