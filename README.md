@@ -12,6 +12,8 @@ Museek is a small project allowing you to search for your favorite music lyrics!
 ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
 ![Heroku](https://img.shields.io/badge/heroku-%23430098.svg?style=for-the-badge&logo=heroku&logoColor=white)
 
+### Check the website [here](https://axel-lgt.github.io/museek/)
+
 ## Technologies
 In order to make this project, I used the following technologies:
 
